@@ -6,3 +6,5 @@ Lessons
 Projeler ve ödevler
 
 Projeler ödevler ve
+
+Ödevler projeler ve
