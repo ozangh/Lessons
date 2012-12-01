@@ -1,0 +1,21 @@
+body{
+
+    background-color: #4169e1;
+}
+#mainBoard{
+    width: 560px;
+    height: 560px;
+    padding: 0px;
+    border: 0px;
+    margin: auto 0px;
+}
+
+.box{
+    width: 180px;
+    height: 180px;
+    border: solid 1px silver;
+    padding: 0px;
+    margin: auto 0px;
+    float: left;
+    font-family: tahoma;
+}
