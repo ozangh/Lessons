@@ -2,6 +2,12 @@ body{
 
     background-color: #4169e1;
 }
+
+#turnStatus{
+    margin: auto 0px;
+    border: 1px solid #708090;
+}
+
 #mainBoard{
     width: 560px;
     height: 560px;
