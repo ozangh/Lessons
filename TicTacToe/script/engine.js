@@ -9,15 +9,6 @@ var TicTacToe = {};
 
 
 TicTacToe.GameEngine = function(){
-   /* var data = document.getElementById("textBox").value;
-    var box = document.createElement('div');
-    box.setAttribute('class', 'box');
-
-    for(var i = 0; i < data; i++){
-        document.getElementById("mainBoard").appendChild(box);
-        console.log('element added!');
-        console.log(i);
-    }*/
 
     //This is for our opponent...
     var gameBoard = [
@@ -33,9 +24,11 @@ TicTacToe.GameEngine = function(){
     var targetIndex = event.target.innerHTML;
     console.log(targetIndex);
 
+    //Turn Mechanic
     var playersTurn = "It's your turn!";
     var computersTurn = "It's computer's turn!"
     var turnStatus = "";
+
     // Let the game begin!
 
     if (targetIndex !== ""){
@@ -45,13 +38,36 @@ TicTacToe.GameEngine = function(){
         document.getElementById(target).innerHTML = "X";
     }
 
-    //This is AI:
+    //This is winner check:
 
-    if ((gameBoard[0][0].innerHTML === "O") && (gameBoard[0][1].innerHTML === "O") && (gameBoard[0][2].innerHTML === "O") ||
+    if (
+        //horizontal
+        (gameBoard[0][0].innerHTML === "O") && (gameBoard[0][1].innerHTML === "O") && (gameBoard[0][2].innerHTML === "O") ||
         (gameBoard[1][0].innerHTML === "O") && (gameBoard[1][1].innerHTML === "O") && (gameBoard[1][2].innerHTML === "O") ||
         (gameBoard[2][0].innerHTML === "O") && (gameBoard[2][1].innerHTML === "O") && (gameBoard[2][2].innerHTML === "O") ||
-        (gameBoard[0][1].innerHTML === "O") && (gameBoard[1][1].innerHTML === "O") && (gameBoard[2][1].innerHTML === "O")){
+        //vertical
+        (gameBoard[0][0].innerHTML === "O") && (gameBoard[1][0].innerHTML === "O") && (gameBoard[2][0].innerHTML === "O") ||
+        (gameBoard[0][1].innerHTML === "O") && (gameBoard[1][1].innerHTML === "O") && (gameBoard[2][1].innerHTML === "O") ||
+        (gameBoard[0][2].innerHTML === "O") && (gameBoard[1][2].innerHTML === "O") && (gameBoard[2][2].innerHTML === "O") ||
+        //diagonal
+        (gameBoard[0][0].innerHTML === "O") && (gameBoard[1][1].innerHTML === "O") && (gameBoard[2][2].innerHTML === "O") ||
+        (gameBoard[0][2].innerHTML === "O") && (gameBoard[1][1].innerHTML === "O") && (gameBoard[2][0].innerHTML === "O")
+        ){
         alert("Computer Won!");
+    }else if(
+        //horizontal
+        (gameBoard[0][0].innerHTML === "X") && (gameBoard[0][1].innerHTML === "X") && (gameBoard[0][2].innerHTML === "X") ||
+        (gameBoard[1][0].innerHTML === "X") && (gameBoard[1][1].innerHTML === "X") && (gameBoard[1][2].innerHTML === "X") ||
+        //verticalX
+        (gameBoard[0][0].innerHTML === "X") && (gameBoard[1][0].innerHTML === "X") && (gameBoard[2][0].innerHTML === "X") ||
+        (gameBoard[0][1].innerHTML === "X") && (gameBoard[1][1].innerHTML === "X") && (gameBoard[2][1].innerHTML === "X") ||
+        (gameBoard[2][0].innerHTML === "X") && (gameBoard[2][1].innerHTML === "X") && (gameBoard[2][2].innerHTML === "X") ||
+        (gameBoard[0][2].innerHTML === "X") && (gameBoard[1][2].innerHTML === "X") && (gameBoard[2][2].innerHTML === "X") ||
+        //diagonalX
+        (gameBoard[0][0].innerHTML === "X") && (gameBoard[1][1].innerHTML === "X") && (gameBoard[2][2].innerHTML === "X") ||
+        (gameBoard[0][2].innerHTML === "X") && (gameBoard[1][1].innerHTML === "X") && (gameBoard[2][0].innerHTML === "X")
+        ){
+        alert("You Won!");
     }
 
 };
