@@ -3,23 +3,22 @@
 <head>
     <title>::Tic-Tac-Toe::</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="script/jquery-1.9.0.min.js"></script>
     <script type="text/javascript" src="script/engine.js"></script>
 </head>
 <body>
-<!--<input type="text" id="textBox">
-<input type="submit" onclick="TicTacToe.GameEngine();">-->
 <center>
 <div id="turnStatus"></div>
-<div id="mainBoard">
-    <div id="box1" class="box" onclick="TicTacToe.GameEngine();"></div>
-    <div id="box2" class="box" onclick="TicTacToe.GameEngine();"></div>
-    <div id="box3" class="box" onclick="TicTacToe.GameEngine();"></div>
-    <div id="box4" class="box" onclick="TicTacToe.GameEngine();"></div>
-    <div id="box5" class="box" onclick="TicTacToe.GameEngine();"></div>
-    <div id="box6" class="box" onclick="TicTacToe.GameEngine();"></div>
-    <div id="box7" class="box" onclick="TicTacToe.GameEngine();"></div>
-    <div id="box8" class="box" onclick="TicTacToe.GameEngine();"></div>
-    <div id="box9" class="box" onclick="TicTacToe.GameEngine();"></div>
+<div id="mainBoard" onclick="TicTacToe.gameTurn(); TicTacToe.winnerCheck();">
+    <div id="box1" class="box"></div>
+    <div id="box2" class="box"></div>
+    <div id="box3" class="box"></div>
+    <div id="box4" class="box"></div>
+    <div id="box5" class="box"></div>
+    <div id="box6" class="box"></div>
+    <div id="box7" class="box"></div>
+    <div id="box8" class="box"></div>
+    <div id="box9" class="box"></div>
 </div>
 </center>
 </body>

@@ -5,69 +5,99 @@
  * Time: 2:51 AM
  */
 
+
+
+Array.prototype.random = function (length) {
+    return this[Math.floor((Math.random()*length))][Math.floor((Math.random()*length))];
+};
+
 var TicTacToe = {};
 
+TicTacToe.gameBoard = [
+    ["box1", "box2", "box3"],
+    ["box4", "box5", "box6"],
+    ["box7", "box8", "box9"]
+];
 
-TicTacToe.GameEngine = function(){
+TicTacToe.randomize = function(){
+    return TicTacToe.gameBoard.random(TicTacToe.gameBoard.length);
+};
 
-    //This is for our opponent...
-    var gameBoard = [
-        [document.getElementById("box1"), document.getElementById("box2"), document.getElementById("box3")],
-        [document.getElementById("box4"), document.getElementById("box5"), document.getElementById("box6")],
-        [document.getElementById("box7"), document.getElementById("box8"), document.getElementById("box9")]
-    ];
+TicTacToe.playersTurn = "It's your turn!";
+TicTacToe.computersTurn = "It's computer's turn!";
+TicTacToe.turnValid = false;
+
+TicTacToe.gameTurn = function(){
+    //Turn Mechanic
+    console.log(TicTacToe.turnValid);
+    if (TicTacToe.turnValid === false){
+        $("#turnStatus").html(TicTacToe.playersTurn);
+        TicTacToe.gameEngine();
+        TicTacToe.turnValid = true;
+    }
+    else{
+        $("#turnStatus").html(TicTacToe.computersTurn);
+        if($("#"+TicTacToe.randomize()).html() === ""){
+            $("#"+TicTacToe.randomize()).html("O");
+        }
+        else{
+        TicTacToe.randomize();
+        }
+        TicTacToe.turnValid = false;
+    }
+    console.log(TicTacToe.turnValid);
+};
+
+TicTacToe.gameEngine = function(){
 
     //I want to watch what i clicked...
     var target = event.target.id;
     console.log(target);
-
     var targetIndex = event.target.innerHTML;
     console.log(targetIndex);
 
-    //Turn Mechanic
-    var playersTurn = "It's your turn!";
-    var computersTurn = "It's computer's turn!"
-    var turnStatus = "";
 
     // Let the game begin!
-
     if (targetIndex !== ""){
         alert("You can not do this!");
     }
     else{
-        document.getElementById(target).innerHTML = "X";
+        $('#'+target).html("X");
     }
+};
 
-    //This is winner check:
+TicTacToe.winnerCheck = function(){
 
     if (
         //horizontal
-        (gameBoard[0][0].innerHTML === "O") && (gameBoard[0][1].innerHTML === "O") && (gameBoard[0][2].innerHTML === "O") ||
-        (gameBoard[1][0].innerHTML === "O") && (gameBoard[1][1].innerHTML === "O") && (gameBoard[1][2].innerHTML === "O") ||
-        (gameBoard[2][0].innerHTML === "O") && (gameBoard[2][1].innerHTML === "O") && (gameBoard[2][2].innerHTML === "O") ||
+        ($("#"+TicTacToe.gameBoard[2][0]).html() === "O") && ($("#"+TicTacToe.gameBoard[2][1]).html() === "O") && ($("#"+TicTacToe.gameBoard[2][2]).html() === "O") ||
+        ($("#"+TicTacToe.gameBoard[0][0]).html() === "O") && ($("#"+TicTacToe.gameBoard[0][1]).html() === "O") && ($("#"+TicTacToe.gameBoard[0][2]).html() === "O") ||
+        ($("#"+TicTacToe.gameBoard[1][0]).html() === "O") && ($("#"+TicTacToe.gameBoard[1][1]).html() === "O") && ($("#"+TicTacToe.gameBoard[1][2]).html() === "O") ||
         //vertical
-        (gameBoard[0][0].innerHTML === "O") && (gameBoard[1][0].innerHTML === "O") && (gameBoard[2][0].innerHTML === "O") ||
-        (gameBoard[0][1].innerHTML === "O") && (gameBoard[1][1].innerHTML === "O") && (gameBoard[2][1].innerHTML === "O") ||
-        (gameBoard[0][2].innerHTML === "O") && (gameBoard[1][2].innerHTML === "O") && (gameBoard[2][2].innerHTML === "O") ||
+        ($("#"+TicTacToe.gameBoard[0][0]).html() === "O") && ($("#"+TicTacToe.gameBoard[1][0]).html() === "O") && ($("#"+TicTacToe.gameBoard[2][0]).html() === "O") ||
+        ($("#"+TicTacToe.gameBoard[0][1]).html() === "O") && ($("#"+TicTacToe.gameBoard[1][1]).html() === "O") && ($("#"+TicTacToe.gameBoard[2][1]).html() === "O") ||
+        ($("#"+TicTacToe.gameBoard[0][2]).html() === "O") && ($("#"+TicTacToe.gameBoard[1][2]).html() === "O") && ($("#"+TicTacToe.gameBoard[2][2]).html() === "O") ||
         //diagonal
-        (gameBoard[0][0].innerHTML === "O") && (gameBoard[1][1].innerHTML === "O") && (gameBoard[2][2].innerHTML === "O") ||
-        (gameBoard[0][2].innerHTML === "O") && (gameBoard[1][1].innerHTML === "O") && (gameBoard[2][0].innerHTML === "O")
+        ($("#"+TicTacToe.gameBoard[0][0]).html() === "O") && ($("#"+TicTacToe.gameBoard[1][1]).html() === "O") && ($("#"+TicTacToe.gameBoard[2][2]).html() === "O") ||
+        ($("#"+TicTacToe.gameBoard[0][2]).html() === "O") && ($("#"+TicTacToe.gameBoard[1][1]).html() === "O") && ($("#"+TicTacToe.gameBoard[2][0]).html() === "O")
         ){
         alert("Computer Won!");
     }else if(
         //horizontal
-        (gameBoard[0][0].innerHTML === "X") && (gameBoard[0][1].innerHTML === "X") && (gameBoard[0][2].innerHTML === "X") ||
-        (gameBoard[1][0].innerHTML === "X") && (gameBoard[1][1].innerHTML === "X") && (gameBoard[1][2].innerHTML === "X") ||
-        //verticalX
-        (gameBoard[0][0].innerHTML === "X") && (gameBoard[1][0].innerHTML === "X") && (gameBoard[2][0].innerHTML === "X") ||
-        (gameBoard[0][1].innerHTML === "X") && (gameBoard[1][1].innerHTML === "X") && (gameBoard[2][1].innerHTML === "X") ||
-        (gameBoard[2][0].innerHTML === "X") && (gameBoard[2][1].innerHTML === "X") && (gameBoard[2][2].innerHTML === "X") ||
-        (gameBoard[0][2].innerHTML === "X") && (gameBoard[1][2].innerHTML === "X") && (gameBoard[2][2].innerHTML === "X") ||
-        //diagonalX
-        (gameBoard[0][0].innerHTML === "X") && (gameBoard[1][1].innerHTML === "X") && (gameBoard[2][2].innerHTML === "X") ||
-        (gameBoard[0][2].innerHTML === "X") && (gameBoard[1][1].innerHTML === "X") && (gameBoard[2][0].innerHTML === "X")
+        ($("#"+TicTacToe.gameBoard[0][0]).html() === "X") && ($("#"+TicTacToe.gameBoard[0][1]).html() === "X") && ($("#"+TicTacToe.gameBoard[0][2]).html() === "X") ||
+        ($("#"+TicTacToe.gameBoard[1][0]).html() === "X") && ($("#"+TicTacToe.gameBoard[1][1]).html() === "X") && ($("#"+TicTacToe.gameBoard[1][2]).html() === "X") ||
+        ($("#"+TicTacToe.gameBoard[2][0]).html() === "X") && ($("#"+TicTacToe.gameBoard[2][1]).html() === "X") && ($("#"+TicTacToe.gameBoard[2][2]).html() === "X") ||
+        //vertical
+        ($("#"+TicTacToe.gameBoard[0][0]).html() === "X") && ($("#"+TicTacToe.gameBoard[1][0]).html() === "X") && ($("#"+TicTacToe.gameBoard[2][0]).html() === "X") ||
+        ($("#"+TicTacToe.gameBoard[0][1]).html() === "X") && ($("#"+TicTacToe.gameBoard[1][1]).html() === "X") && ($("#"+TicTacToe.gameBoard[2][1]).html() === "X") ||
+        ($("#"+TicTacToe.gameBoard[0][2]).html() === "X") && ($("#"+TicTacToe.gameBoard[1][2]).html() === "X") && ($("#"+TicTacToe.gameBoard[2][2]).html() === "X") ||
+        //diagonal
+        ($("#"+TicTacToe.gameBoard[0][0]).html() === "X") && ($("#"+TicTacToe.gameBoard[1][1]).html() === "X") && ($("#"+TicTacToe.gameBoard[2][2]).html() === "X") ||
+        ($("#"+TicTacToe.gameBoard[0][2]).html() === "X") && ($("#"+TicTacToe.gameBoard[1][1]).html() === "X") && ($("#"+TicTacToe.gameBoard[2][0]).html() === "X")
         ){
         alert("You Won!");
+    }else{
+        console.log("Go on!");
     }
 
 };
