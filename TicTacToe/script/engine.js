@@ -13,6 +13,9 @@ Array.prototype.random = function (length) {
 
 var TicTacToe = {};
 
+TicTacToe.hasWinner = false;
+
+//GameBoard Map for randomize set
 TicTacToe.gameBoard = [
     ["box1", "box2", "box3"],
     ["box4", "box5", "box6"],
@@ -23,47 +26,49 @@ TicTacToe.randomize = function(){
     return TicTacToe.gameBoard.random(TicTacToe.gameBoard.length);
 };
 
-TicTacToe.playersTurn = "It's your turn!";
-TicTacToe.computersTurn = "It's computer's turn!";
-TicTacToe.turnValid = false;
 
 TicTacToe.gameTurn = function(){
+
     //Turn Mechanic
-    console.log(TicTacToe.turnValid);
-    if (TicTacToe.turnValid === false){
-        $("#turnStatus").html(TicTacToe.playersTurn);
-        TicTacToe.gameEngine();
-        TicTacToe.turnValid = true;
+    TicTacToe.playerPlay(TicTacToe.getTarget());
+    TicTacToe.winnerCheck();
+    if(TicTacToe.hasWinner === false){
+    TicTacToe.comPlay();
+    TicTacToe.winnerCheck();
     }
-    else{
-        $("#turnStatus").html(TicTacToe.computersTurn);
-        if($("#"+TicTacToe.randomize()).html() === ""){
-            $("#"+TicTacToe.randomize()).html("O");
-        }
-        else{
-        TicTacToe.randomize();
-        }
-        TicTacToe.turnValid = false;
-    }
-    console.log(TicTacToe.turnValid);
+
 };
 
-TicTacToe.gameEngine = function(){
+TicTacToe.comPlay = function(){
 
-    //I want to watch what i clicked...
-    var target = event.target.id;
-    console.log(target);
-    var targetIndex = event.target.innerHTML;
-    console.log(targetIndex);
+    var pcTarget = TicTacToe.randomize();
+    if ($("#" + pcTarget).html() != "")
+    {
+        do {
+            pcTarget = TicTacToe.randomize();
+        } while ($("#" + pcTarget).html() != "")
+        return $("#"+pcTarget).html("O");
+    }else
+    {
+        return $("#"+pcTarget).html("O");
+    }
+};
 
+TicTacToe.getTarget = function(){
+    var target = event.target;
+    return target;
+};
+
+TicTacToe.playerPlay = function(target){
 
     // Let the game begin!
-    if (targetIndex !== ""){
+    if (target.innerHTML === "X" || target.innerHTML === "O"){
         alert("You can not do this!");
     }
     else{
-        $('#'+target).html("X");
+        $('#'+target.id).html("X");
     }
+
 };
 
 TicTacToe.winnerCheck = function(){
@@ -82,6 +87,11 @@ TicTacToe.winnerCheck = function(){
         ($("#"+TicTacToe.gameBoard[0][2]).html() === "O") && ($("#"+TicTacToe.gameBoard[1][1]).html() === "O") && ($("#"+TicTacToe.gameBoard[2][0]).html() === "O")
         ){
         alert("Computer Won!");
+        $("body").click(function() {
+            location.reload();
+
+        });
+        TicTacToe.hasWinner = true;
     }else if(
         //horizontal
         ($("#"+TicTacToe.gameBoard[0][0]).html() === "X") && ($("#"+TicTacToe.gameBoard[0][1]).html() === "X") && ($("#"+TicTacToe.gameBoard[0][2]).html() === "X") ||
@@ -96,6 +106,11 @@ TicTacToe.winnerCheck = function(){
         ($("#"+TicTacToe.gameBoard[0][2]).html() === "X") && ($("#"+TicTacToe.gameBoard[1][1]).html() === "X") && ($("#"+TicTacToe.gameBoard[2][0]).html() === "X")
         ){
         alert("You Won!");
+        $("body").click(function() {
+            location.reload();
+
+        });
+        TicTacToe.hasWinner = true;
     }else{
         console.log("Go on!");
     }
