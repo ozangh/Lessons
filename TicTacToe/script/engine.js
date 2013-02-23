@@ -42,14 +42,13 @@ TicTacToe.gameTurn = function(){
 TicTacToe.comPlay = function(){
 
     var pcTarget = TicTacToe.randomize();
-    if ($("#" + pcTarget).html() != "")
-    {
+    if ($("#" + pcTarget).html() != ""){
         do {
             pcTarget = TicTacToe.randomize();
         } while ($("#" + pcTarget).html() != "")
         return $("#"+pcTarget).html("O");
-    }else
-    {
+    }
+    else{
         return $("#"+pcTarget).html("O");
     }
 };
@@ -64,6 +63,7 @@ TicTacToe.playerPlay = function(target){
     // Let the game begin!
     if (target.innerHTML === "X" || target.innerHTML === "O"){
         alert("You can not do this!");
+        TicTacToe.playerPlay();
     }
     else{
         $('#'+target.id).html("X");
@@ -71,7 +71,32 @@ TicTacToe.playerPlay = function(target){
 
 };
 
+TicTacToe.drawCheck = function(){
+    var fullBoard;
+    var boxes = 9;
+    for (var i in TicTacToe.gameBoard){
+        for(var j in TicTacToe.gameBoard){
+            //console.log(TicTacToe.gameBoard[i][j][k]);
+            if($("#" + TicTacToe.gameBoard[i][j]).html() != ""){
+                boxes--;
+            }
+        }
+    }
+    if (boxes !== 0){
+        console.log("Go on!");
+    }
+    else{
+        alert("Draw!");
+        $("body").click(function() {
+            location.reload();
+        });
+    }
+
+};
+
 TicTacToe.winnerCheck = function(){
+
+    //TicTacToe.drawCheck();
 
     if (
         //horizontal
@@ -89,7 +114,6 @@ TicTacToe.winnerCheck = function(){
         alert("Computer Won!");
         $("body").click(function() {
             location.reload();
-
         });
         TicTacToe.hasWinner = true;
     }else if(
@@ -108,7 +132,6 @@ TicTacToe.winnerCheck = function(){
         alert("You Won!");
         $("body").click(function() {
             location.reload();
-
         });
         TicTacToe.hasWinner = true;
     }else{
